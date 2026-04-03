@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:statemanagement/auth/register.dart';
 import 'package:statemanagement/main_layout.dart';
 import 'package:statemanagement/mainui/home.dart';
@@ -160,7 +161,65 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                     ),
+                    const SizedBox(height: 8),
+
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          foregroundColor: MainLayout.accentOrange,
+                        ),
+                        child: const Text(
+                          'Forgot Password?',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
+                    
                     const SizedBox(height: 24),
+
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        final isLoading = state is AuthLoading;
+                        return ElevatedButton(
+                          onPressed: isLoading
+                              ? null
+                              : () {
+                                  if (_formKey.currentState!.validate()) {
+                                    context.read<AuthBloc>().add(
+                                          LoginSubmitted(
+                                            email: emailController.text,
+                                            password: passwordController.text,
+                                          ),
+                                        );
+                                  }
+                                },
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 18),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            backgroundColor: MainLayout.primaryColor,
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                          ),
+                          child: isLoading
+                              ? const SizedBox(
+                                  width: 22,
+                                  height: 22,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2.5),
+                                )
+                              : const Text('Log In',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.0
+                                  ),
+                              ),
+                        );
+                      }
+                    ),
 
                     ElevatedButton(
                       onPressed: () {
