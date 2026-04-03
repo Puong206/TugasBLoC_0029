@@ -25,11 +25,25 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MainLayout(
-      title: 'Login',
-      showAppBar: false,
-      child: Container(
-        color: MainLayout.backgroundColor,
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthAutenticated) {
+          Navigator.pushReplacementNamed(
+            context, '/home'
+          );
+        } else if (state is AuthError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.redAccent),
+          );
+        }
+      },
+      child: MainLayout(
+        title: 'Login',
+        showAppBar: false,
+        child: Container(
+          color: MainLayout.backgroundColor,
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
