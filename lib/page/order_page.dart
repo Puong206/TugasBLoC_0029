@@ -61,10 +61,34 @@ class _OrderPageState extends State<OrderPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MainLayout(
-      title: 'Order Menu',
-      showAppBar: true,
-      child: Container(
+    return BlocListener<OrderBloc, OrderState>(
+      listener: (context, state) {
+        if (state is OrderSuccess) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => DetailOrderPage(
+                makanan: state.makanan,
+                minuman: state.minuman,
+                jumlahMakanan: state.jumlahMakanan.toString(),
+                jumlahMinuman: state.jumlahMinuman.toString(),
+                totalHarga: state.totalHarga,
+              ),
+            ),
+          );
+        } else if (state is OrderError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      child: MainLayout(
+        title: 'Order Menu',
+        showAppBar: true,
+        child: Container(
         color: MainLayout.backgroundColor,
         height: double.infinity,
         child: SingleChildScrollView(
