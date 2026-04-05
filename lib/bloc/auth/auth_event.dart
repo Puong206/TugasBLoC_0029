@@ -16,5 +16,16 @@ class LoginSubmitted extends AuthEvent {
 }
 
 class RegisterSubmitted extends AuthEvent {
-  
+  final String name;
+  final String email;
+  final String password;
+
+  RegisterSubmitted({
+    required this.name,
+    required this.email,
+    required this.password,
+  });
+
+  @override
+  List<Object?> get props => [name, email, password];
 }
