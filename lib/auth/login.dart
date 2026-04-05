@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:statemanagement/auth/register.dart';
+import 'package:statemanagement/bloc/auth/auth_bloc.dart';
 import 'package:statemanagement/main_layout.dart';
 import 'package:statemanagement/mainui/home.dart';
 
@@ -27,10 +28,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthAutenticated) {
-          Navigator.pushReplacementNamed(
-            context, '/home'
-          );
+        if (state is AuthAuthenticated) {
+          Navigator.pushReplacementNamed(context, '/home');
         } else if (state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
