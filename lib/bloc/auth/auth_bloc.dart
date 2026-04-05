@@ -1,7 +1,10 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:equatable/equatable.dart';
+
 part 'auth_event.dart';
 part 'auth_state.dart';
 
-class AuthBloc {
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
 
     on<LoginSubmitted>(_onLoginSubmitted);
@@ -9,14 +12,5 @@ class AuthBloc {
     on<LogoutRequested>(_onLogoutRequested);
   }
 
-  Future<void> _onLoginSubmitted(LoginSubmitted event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
-    await Future.delayed(const Duration(1));
-
-    if (event.email.isNotEmpty && event.password.isNotEmpty) {
-      emit(AuthAuthenticated(email: event.email));
-    } else {
-      emit(const AuthError('Email dan password salah'));
-    }
-  }
+  
 }
