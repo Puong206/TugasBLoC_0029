@@ -154,14 +154,14 @@ class _OrderPageState extends State<OrderPage> {
                           ],
                         ),
                         const SizedBox(height: 16),
-                        _buildInputDecoration(
+                        _buildField(
                           controller: makananController,
                           label: 'Food Name',
                           icon: Icons.lunch_dining_rounded,
                           errorMessage: 'Please enter your food order',
                         ),
                         const SizedBox(height: 16),
-                        _buildInputDecoration(
+                        _buildField(
                           controller: jumlahMakananController,
                           label: 'Quantity (Food)',
                           icon: Icons.format_list_numbered_rounded,
@@ -204,14 +204,14 @@ class _OrderPageState extends State<OrderPage> {
                           ],
                         ),
                         const SizedBox(height: 16),
-                        _buildInputDecoration(
+                        _buildField(
                           controller: minumanController,
                           label: 'Drink Name',
                           icon: Icons.coffee_rounded,
                           errorMessage: 'Please enter your drink order',
                         ),
                         const SizedBox(height: 16),
-                        _buildInputDecoration(
+                        _buildField(
                           controller: jumlahMinumanController,
                           label: 'Quantity (Drink)',
                           icon: Icons.format_list_numbered_rounded,
