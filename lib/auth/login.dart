@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:statemanagement/auth/register.dart';
 import 'package:statemanagement/bloc/auth/auth_bloc.dart';
 import 'package:statemanagement/main_layout.dart';
-import 'package:statemanagement/mainui/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -43,9 +42,9 @@ class _LoginPageState extends State<LoginPage> {
         showAppBar: false,
         child: Container(
           color: MainLayout.backgroundColor,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Padding(
+          child: Center(
+            child: SingleChildScrollView(
+              child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 32.0,
                 vertical: 24.0,
@@ -229,39 +228,9 @@ class _LoginPageState extends State<LoginPage> {
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 1.0
                                   ),
-                              ),
+                                ),
                         );
                       }
-                    ),
-
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomePage(),
-                            ),
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        backgroundColor: MainLayout.primaryColor,
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                      ),
-                      child: const Text(
-                        'Log In',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.0,
-                        ),
-                      ),
                     ),
                     const SizedBox(height: 24),
 
@@ -299,6 +268,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
+    )
     );
   }
 }
