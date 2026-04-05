@@ -16,3 +16,5 @@ class AuthAuthenticated extends AuthState {
   @override
   List<Object?> get props => [email];
 }
+
+class AuthRegistered extends AuthState {}
