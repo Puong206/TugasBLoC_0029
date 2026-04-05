@@ -14,12 +14,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onLoginSubmitted(LoginSubmitted event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    await Future.delayed(const Duration(1));
+    await Future.delayed(const Duration(seconds: 1));
 
     if (event.email.isNotEmpty && event.password.isNotEmpty) {
       emit(AuthAuthenticated(email: event.email));
     } else {
-      emit(const AuthError('Email dan password salah'));
+      emit(AuthError(message: 'Email dan password salah'));
     }
   }
 
@@ -33,7 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event.email.isNotEmpty && event.password.isNotEmpty && event.name.isNotEmpty) {
       emit(AuthRegistered());
     } else {
-      emit(const AuthError(message: 'Semua field harus diisi'));
+      emit(AuthError(message: 'Semua field harus diisi'));
     }
   }
 
