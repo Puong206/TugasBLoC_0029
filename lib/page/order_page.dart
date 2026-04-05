@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:statemanagement/main_layout.dart';
+import 'package:statemanagement/bloc/order/order_bloc.dart';
 import 'package:statemanagement/page/detail_order_page.dart';
 
 class OrderPage extends StatefulWidget {
@@ -14,7 +16,6 @@ class _OrderPageState extends State<OrderPage> {
   final TextEditingController minumanController = TextEditingController();
   final TextEditingController jumlahMakananController = TextEditingController();
   final TextEditingController jumlahMinumanController = TextEditingController();
-  int totalHarga = 0;
   final _formKey = GlobalKey<FormState>();
 
   void calculateTotalPrice() {
@@ -212,49 +213,62 @@ class _OrderPageState extends State<OrderPage> {
                   ),
                   const SizedBox(height: 48),
 
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        calculateTotalPrice();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailOrderPage(
-                              jumlahMakanan: jumlahMakananController.text,
-                              jumlahMinuman: jumlahMinumanController.text,
-                              makanan: makananController.text,
-                              minuman: minumanController.text,
-                              totalHarga: totalHarga,
-                            ),
+                  BlocBuilder<OrderBloc, OrderState>(
+                    builder: (context, state) {
+                      final isLoading = state is OrderLoading;
+                      return ElevatedButton(
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                if (_formKey.currentState!.validate()) {
+                                  calculateTotalPrice();
+                                  context.read<OrderBloc>().add(
+                                        PlaceOrderSubmitted(
+                                          makanan: makananController.text,
+                                          jumlahMakanan: int.parse(jumlahMakananController.text),
+                                          minuman: minumanController.text,
+                                          jumlahMinuman: int.parse(jumlahMinumanController.text),
+                                          totalHarga: totalHarga,
+                                        ),
+                                      );
+                                }
+                              },
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 18),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 18),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      backgroundColor: MainLayout.primaryColor,
-                      foregroundColor: Colors.white,
-                      elevation: 2,
-                      shadowColor: MainLayout.primaryColor.withOpacity(0.5),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.receipt_long_rounded),
-                        SizedBox(width: 8),
-                        Text(
-                          'Place Order',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.0,
-                          ),
+                          backgroundColor: MainLayout.primaryColor,
+                          foregroundColor: Colors.white,
+                          elevation: 2,
+                          shadowColor: MainLayout.primaryColor.withOpacity(0.5),
                         ),
-                      ],
-                    ),
+                        child: isLoading
+                            ? const SizedBox(
+                                width: 22,
+                                height: 22,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2.5,
+                                ),
+                              )
+                            : const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.receipt_long_rounded),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Place Order',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                      );
+                    },
                   ),
                   const SizedBox(height: 24),
                 ],
