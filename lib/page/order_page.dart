@@ -18,15 +18,6 @@ class _OrderPageState extends State<OrderPage> {
   final TextEditingController jumlahMinumanController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  void calculateTotalPrice() {
-    int jumlahMakanan = int.tryParse(jumlahMakananController.text) ?? 0;
-    int jumlahMinuman = int.tryParse(jumlahMinumanController.text) ?? 0;
-
-    setState(() {
-      totalHarga = (jumlahMakanan * 32000) + (jumlahMinuman * 5000);
-    });
-  }
-
   @override
   void dispose() {
     makananController.dispose();
@@ -36,7 +27,7 @@ class _OrderPageState extends State<OrderPage> {
     super.dispose();
   }
 
-  Widget _buildInputDecoration({
+  Widget _buildField({
     required TextEditingController controller,
     required String label,
     required IconData icon,
@@ -64,12 +55,7 @@ class _OrderPageState extends State<OrderPage> {
         filled: true,
         fillColor: MainLayout.inputFillColor,
       ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return errorMessage;
-        }
-        return null;
-      },
+      validator: (v) => (v == null || v.isEmpty) ? errorMessage : null,
     );
   }
 
