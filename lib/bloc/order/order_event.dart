@@ -21,3 +21,5 @@ class OrderSubmitted extends OrderEvent {
   @override
   List<Object?> get props => [makanan, minuman, jumlahMakanan, jumlahMinuman];
 }
+
+class OrderReset extends OrderEvent {}
