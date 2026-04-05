@@ -80,7 +80,7 @@ class _OrderPageState extends State<OrderPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.redAccent,
             ),
           );
         }
