@@ -17,4 +17,7 @@ class OrderSubmitted extends OrderEvent {
     required this.jumlahMakanan,
     required this.jumlahMinuman,
   });
+
+  @override
+  List<Object?> get props => [makanan, minuman, jumlahMakanan, jumlahMinuman];
 }
