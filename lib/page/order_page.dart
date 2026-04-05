@@ -231,16 +231,14 @@ class _OrderPageState extends State<OrderPage> {
                             ? null
                             : () {
                                 if (_formKey.currentState!.validate()) {
-                                  calculateTotalPrice();
                                   context.read<OrderBloc>().add(
-                                        PlaceOrderSubmitted(
-                                          makanan: makananController.text,
-                                          jumlahMakanan: int.parse(jumlahMakananController.text),
-                                          minuman: minumanController.text,
-                                          jumlahMinuman: int.parse(jumlahMinumanController.text),
-                                          totalHarga: totalHarga,
-                                        ),
-                                      );
+                                    OrderSubmitted(
+                                      makanan: makananController.text,
+                                      jumlahMakanan: int.tryParse(jumlahMakananController.text) ?? 0,
+                                      minuman: minumanController.text,
+                                      jumlahMinuman: int.tryParse(jumlahMinumanController.text) ?? 0,
+                                    ),
+                                  );
                                 }
                               },
                         style: ElevatedButton.styleFrom(
