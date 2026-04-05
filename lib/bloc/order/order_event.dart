@@ -8,8 +8,8 @@ abstract class OrderEvent extends Equatable {
 class OrderSubmitted extends OrderEvent {
   final String makanan;
   final String minuman;
-  final String jumlahMakanan;
-  final String jumlahMinuman;
+  final int jumlahMakanan;
+  final int jumlahMinuman;
 
   OrderSubmitted({
     required this.makanan,
