@@ -36,4 +36,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const AuthError(message: 'Semua field harus diisi'));
     }
   }
+
+  void _onLogoutRequested(
+    LogoutRequested event, Emitter<AuthState> emit
+  ) {
+    emit(AuthUnauthenticated());
+  }
 }
